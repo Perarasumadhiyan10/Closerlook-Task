@@ -1,0 +1,1 @@
+export default function Progress({step=1}){const steps=['Search','Seats','Passengers','Payment','Ticket'];return <div className="progress">{steps.map((label,i)=><div key={label} className={i+1<=step?'step active':'step'}><span>{i+1}</span><b>{label}</b></div>)}</div>}

@@ -1,0 +1,30 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function isConductor() {
+      return signedIn() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'conductor';
+    }
+
+    match /users/{uid} {
+      allow read, update: if signedIn() && request.auth.uid == uid;
+      allow create: if signedIn() && request.auth.uid == uid
+                    && request.resource.data.role == 'passenger';
+    }
+
+    match /bookings/{bookingId} {
+      allow create: if signedIn() && request.resource.data.userId == request.auth.uid;
+      allow read: if signedIn() && (resource.data.userId == request.auth.uid || isConductor());
+      allow update: if isConductor()
+                    && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['boardingStatus','boardingTimestamp']);
+      allow delete: if false;
+    }
+
+    match /seatReservations/{reservationId} {
+      // Booking writes are performed only in a transaction from the frontend demo.
+      // Production should use a trusted Cloud Function for stronger payment verification.
+      allow read: if true;
+      allow create, update: if signedIn();
+    }
+  }
+}

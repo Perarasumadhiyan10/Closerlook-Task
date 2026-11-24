@@ -1,0 +1,2 @@
+import { Bus, Mail, Phone } from 'lucide-react'
+export default function Footer(){return <footer><div className="footer-inner"><div><div className="brand footer-brand"><span className="brand-mark"><Bus size={21}/></span>BUSGO</div><p>Smart, safe and comfortable bus travel.</p></div><div><h4>Support</h4><p><Phone size={14}/> 1800-123-BUSGO</p><p><Mail size={14}/> support@busgo.in</p></div><div><h4>Popular routes</h4><p>Erode → Coimbatore</p><p>Chennai → Bangalore</p></div></div><div className="copyright">© 2026 BusGo. All rights reserved.</div></footer>}

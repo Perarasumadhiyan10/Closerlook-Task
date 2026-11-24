@@ -1,16 +1,33 @@
-# React + Vite
+# BUSGO – Smart Bus Ticket Booking
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Setup
 
-Currently, two official plugins are available:
+```bash
+npm install
+cp .env.example .env
+npm run dev
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Firebase configuration
 
-## React Compiler
+1. Create a Firebase project and enable **Email/Password** Authentication.
+2. Create a Firestore database.
+3. Copy the Firebase web app configuration into `.env` using the variable names in `.env.example`.
+4. Deploy `firestore.rules` in Firebase Console → Firestore → Rules.
+5. Restart the Vite development server after changing `.env`.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+No Firebase credentials are bundled in the source. The app clearly reports configuration issues and does not simulate Authentication when credentials are missing.
 
-## Expanding the ESLint configuration
+## Conductor access
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Set a user's Firestore `users/{uid}.role` field to `conductor` to allow conductor verification and boarding updates. Normal passenger accounts default to `passenger`.
+
+## Demo payment limitation
+
+Payment is explicitly demo-only. It does not collect or process real card or banking information. The frontend creates the Firestore booking and atomically reserves seats in a transaction. For production, use a verified payment provider and a trusted backend/Cloud Function; never trust a client-only payment status.
+
+## Scripts
+
+- `npm run dev` – local development
+- `npm run build` – production build
+- `npm run lint` – lint source
