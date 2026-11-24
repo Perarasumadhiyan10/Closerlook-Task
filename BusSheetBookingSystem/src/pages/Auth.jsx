@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Mail, LockKeyhole, User, Smartphone, ArrowLeft, Bus } from 'lucide-react'
 import { registerUser, loginUser, resetPassword } from '../services/authService'
 import { signOut } from 'firebase/auth'
-import { auth } from '../firebase/firebase'
+import { auth, isFirebaseConfigured } from '../firebase/firebase'
 
 function friendly(error){const map={'auth/email-already-in-use':'This email is already registered.','auth/invalid-credential':'Email or password is incorrect.','auth/weak-password':'Password must be at least 6 characters.','auth/invalid-email':'Enter a valid email address.','auth/user-not-found':'No account found for this email.'};return map[error?.code]||error?.message||'Something went wrong.'}
 
@@ -15,6 +15,7 @@ export function ForgotPassword(){const [email,setEmail]=useState('');const [mess
 
 export function ConductorLogin(){const [form,setForm]=useState({email:'',password:''});const [error,setError]=useState('');const [busy,setBusy]=useState(false);const navigate=useNavigate();const submit=async e=>{e.preventDefault();setBusy(true);setError('');try{const credential=await loginUser(form.email,form.password);const {getDoc,doc}=await import('firebase/firestore');const {db}=await import('../firebase/firebase');const snap=await getDoc(doc(db,'users',credential.user.uid));if(!snap.exists()||snap.data().role!=='conductor'){setError('This account is not authorized as a conductor.');await signOut(auth);return}navigate('/conductor')}catch(err){setError(friendly(err))}finally{setBusy(false)}};return <AuthShell title="Conductor login" subtitle="Sign in with an authorized conductor account"><form onSubmit={submit} className="auth-form"><Field icon={Mail} type="email" label="Conductor email" value={form.email} onChange={v=>setForm({...form,email:v})}/><Field icon={LockKeyhole} type="password" label="Password" value={form.password} onChange={v=>setForm({...form,password:v})}/>{error&&<div className="form-error">{error}</div>}<button className="primary-btn" disabled={busy}>{busy?'Checking account…':'Login to Conductor'}</button></form><div className="auth-links"><Link to="/login">Passenger login</Link><Link to="/signup">Create passenger account</Link></div></AuthShell>}
 
-function AuthShell({title,subtitle,children}){return <main className="auth-page"><div className="auth-card"><div className="auth-logo"><span className="brand-mark"><Bus size={22}/></span>BUSGO</div><h1>{title}</h1><p>{subtitle}</p>{children}</div></main>}
+function AuthShell({title,subtitle,children}){return <main className="auth-page"><div className="auth-card"><div className="auth-logo"><span className="brand-mark"><Bus size={22}/></span>BUSGO</div><h1>{title}</h1><p>{subtitle}</p>{!isFirebaseConfigured&&<div className="firebase-warning"><b>Firebase setup required</b><span>Copy .env.example to .env, add your Firebase web configuration, and restart npm run dev.</span></div>}{children}</div></main>}
 function Field({icon:Icon,label,type='text',value,onChange}){return <label className="field"><span>{label}</span><div><Icon size={18}/><input type={type} value={value} onChange={e=>onChange(e.target.value)} required/></div></label>}
+
 
