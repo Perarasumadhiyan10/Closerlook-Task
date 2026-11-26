@@ -12,7 +12,6 @@ export default function Navbar() {
     <nav className={open?'nav-links open':'nav-links'}>
       <NavLink to="/" onClick={()=>setOpen(false)}>Home</NavLink>
       <NavLink to="/bookings" onClick={()=>setOpen(false)}>My Bookings</NavLink>
-      <NavLink to="/conductor-login" onClick={()=>setOpen(false)}>Conductor</NavLink>
       {user ? <div className="user-menu"><span><UserRound size={17}/>{user.name}</span><button onClick={logout}><LogOut size={16}/>Logout</button></div> : <Link className="nav-login" to="/login">Login / Signup</Link>}
     </nav>
   </div></header>

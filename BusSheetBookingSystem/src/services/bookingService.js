@@ -47,6 +47,17 @@ export async function createBooking(payload) {
           createdAt:serverTimestamp(),
         })
       })
+      const localBookings = readLocal(DEMO_BOOKINGS_KEY, {})
+      localBookings[bookingId] = {
+        ...payload,
+        bookingId,
+        paymentStatus:'PAID – DEMO',
+        bookingStatus:'CONFIRMED',
+        boardingStatus:'NOT_BOARDED',
+        boardingTimestamp:null,
+        createdAt: { seconds: Math.floor(Date.now() / 1000) },
+      }
+      writeLocal(DEMO_BOOKINGS_KEY, localBookings)
       return bookingId
     } catch (error) {
       if (!['not-found', 'failed-precondition', 'unavailable', 'permission-denied'].includes(error.code) && !error.message?.includes('does not exist')) throw error
@@ -100,7 +111,7 @@ export async function getBooking(bookingId) {
   const bookings = readLocal(DEMO_BOOKINGS_KEY, {})
   return bookings[bookingId] || null
 }
-export async function markBoarded(bookingId) {
+export async function markBoarded(bookingId, fallbackBooking = null) {
   const bookingRef = canUseFirestore() ? doc(db, 'bookings', bookingId) : null
   if (bookingRef) {
     try {
@@ -117,7 +128,10 @@ export async function markBoarded(bookingId) {
   }
 
   const bookings = readLocal(DEMO_BOOKINGS_KEY, {})
-  if (!bookings[bookingId]) throw new Error('Ticket not found')
+  if (!bookings[bookingId]) {
+    if (!fallbackBooking) throw new Error('Ticket not found')
+    bookings[bookingId] = { ...fallbackBooking, bookingId }
+  }
   if (bookings[bookingId].boardingStatus === 'BOARDED') throw new Error('ALREADY BOARDED')
   bookings[bookingId].boardingStatus = 'BOARDED'
   bookings[bookingId].boardingTimestamp = { seconds: Math.floor(Date.now() / 1000) }

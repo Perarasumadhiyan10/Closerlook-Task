@@ -7,3 +7,48 @@
 
 
 .firebase-warning{display:flex;flex-direction:column;gap:4px;background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;border-radius:8px;padding:11px;margin-top:14px;font-size:12px}.firebase-warning b{font-size:12px}.firebase-warning span{line-height:1.45}
+
+.conductor-auth-page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px 20px;background:linear-gradient(135deg,#0f172a,#1e293b)}
+.conductor-auth-card{border:1px solid #e2e8f0}
+.conductor-panel-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;background:#eff6ff;color:#1d4ed8;font-size:11px;font-weight:800;letter-spacing:1.2px}
+.conductor-credentials-hint{margin-top:16px;padding:10px 12px;border-radius:8px;background:#f8fafc;border:1px solid #e2e8f0;display:flex;align-items:center;gap:8px;font-size:12px;color:#475569}
+.conductor-credentials-hint svg{color:#2563eb;flex-shrink:0}
+
+.conductor-shell{min-height:100vh;background:#f5f6fa}
+.conductor-topbar{background:#0f172a;color:#fff;border-bottom:1px solid #1e293b;position:sticky;top:0;z-index:40}
+.conductor-topbar-inner{max-width:760px;margin:auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.conductor-brand{display:flex;align-items:center;gap:10px}
+.conductor-brand strong{display:block;font-size:15px;letter-spacing:.4px}
+.conductor-brand span{display:block;font-size:11px;color:#94a3b8}
+.conductor-topbar-actions{display:flex;align-items:center;gap:10px}
+.conductor-id-pill{background:#1e293b;color:#cbd5e1;padding:7px 11px;border-radius:8px;font-size:12px;font-weight:700}
+.conductor-logout-btn{display:inline-flex;align-items:center;gap:6px;border:1px solid #334155;background:#1e293b;color:#fff;padding:8px 12px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer}
+.conductor-logout-btn:hover{background:#334155}
+
+.conductor-head span{font-size:11px;font-weight:800;letter-spacing:1.4px;color:#2563eb}
+.conductor-head h1{margin:4px 0 18px}
+.scanner-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:14px}
+.scanner-actions .primary-btn,.danger-btn,.secondary-scan-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:44px;padding:0 18px;border-radius:8px;font-weight:700;cursor:pointer}
+.danger-btn{border:0;background:#dc2626;color:#fff}
+.secondary-scan-btn{border:1px solid #dfe3ea;background:#fff;color:#172033}
+.secondary-scan-btn:hover{background:#f8fafc}
+
+.result-head{display:flex;align-items:center;gap:10px;color:#178b61;margin-bottom:14px}
+.result-head span{font-size:11px;font-weight:800;letter-spacing:1.2px}
+.result-head p{margin:2px 0 0;color:#475569;font-size:13px;font-weight:600}
+
+.passenger-details-box{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px;margin-bottom:14px}
+.passenger-details-box h3{margin:0 0 10px;font-size:13px;text-transform:uppercase;letter-spacing:.8px;color:#475569}
+.passenger-cards-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.passenger-detail-item{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px}
+.passenger-detail-item b{display:flex;align-items:center;gap:5px;font-size:14px;color:#172033}
+.passenger-detail-item span{font-size:12px;color:#64748b}
+.passenger-seat-badge{min-width:36px;height:36px;border-radius:8px;background:#2563eb;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;padding:0 8px}
+.passenger-contact-row{display:flex;flex-wrap:wrap;gap:16px;margin-top:10px;padding-top:10px;border-top:1px dashed #cbd5e1;font-size:12px;font-weight:600;color:#334155}
+.passenger-contact-row span{display:inline-flex;align-items:center;gap:6px}
+.valid-ticket .board-btn,.valid-ticket .boarded-banner{margin-top:14px}
+.invalid-ticket{display:flex;align-items:center;gap:10px}
+.invalid-ticket span{font-size:11px;font-weight:800;letter-spacing:1.2px}
+.invalid-ticket p{margin:2px 0 0;color:#475569;font-size:13px}
+
+@media(max-width:680px){.conductor-topbar-inner{padding:12px 14px}.passenger-cards-list{grid-template-columns:1fr}}
